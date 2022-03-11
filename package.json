@@ -1,0 +1,8 @@
+{
+    "private": true,
+    "scripts": {
+        "heroku-postbuild": "cd nuxt && yarn install && yarn generate"
+    },
+    "devDependencies": {},
+    "dependencies": {}
+}
