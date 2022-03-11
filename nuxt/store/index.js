@@ -63,7 +63,7 @@ export const mutations = {
 
 export const actions = {
   async getShops({ commit }) {
-    const shops = await this.$axios.get("/api/shops");
+    const shops = await this.$axios.get("/api/test");
     const shopList = shops.data.data;
     commit('setShops', shopList);
   },
