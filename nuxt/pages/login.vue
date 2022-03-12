@@ -29,7 +29,7 @@ export default {
   methods:{
     async login(){
       try{
-        await this.$auth.loginWith("laravelSanctum",{
+        await this.$auth.loginWith("cookie",{
           data:this.form,
         });
       }catch(e){

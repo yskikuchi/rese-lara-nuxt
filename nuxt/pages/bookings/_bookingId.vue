@@ -80,7 +80,7 @@ export default {
     }
   },
   async mounted(){
-    const resData = await this.$axios.get('/api/booking/' + this.$route.params.bookingId);
+    const resData = await this.$axios.get('/booking/' + this.$route.params.bookingId);
     this.booking= resData.data.data;
     this.shop = this.booking.shop;
     this.bookedDate = this.booking.date;

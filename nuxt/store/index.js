@@ -63,12 +63,12 @@ export const mutations = {
 
 export const actions = {
   async getShops({ commit }) {
-    const shops = await this.$axios.get("/api/shops");
+    const shops = await this.$axios.get("/shops");
     const shopList = shops.data.data;
     commit('setShops', shopList);
   },
   async getMyBookings({ commit }) {
-    const resData = await this.$axios.get('/api/booking');
+    const resData = await this.$axios.get('/booking');
     const bookingList = resData.data.data;
     commit('setMyBookings', bookingList);
   }

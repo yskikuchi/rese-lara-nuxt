@@ -81,7 +81,7 @@ export default {
   methods:{
     async cancelBooking(id, index){
       if(confirm('予約'+index +'を削除してよろしいですか？')){
-        await this.$axios.delete('api/booking/' + id);
+        await this.$axios.delete('/booking/' + id);
         await this.$store.dispatch('getMyBookings');
       }
     },
@@ -92,7 +92,7 @@ export default {
       try{
         console.log(this.sendData);
         if(confirm('事前決済ページへ移動しますか？')){
-          const res = await this.$axios.post('/api/pay',this.sendData);
+          const res = await this.$axios.post('/pay',this.sendData);
           const sessionId = res.data.data.id;
           await this.$stripe.redirectToCheckout({
           sessionId : sessionId

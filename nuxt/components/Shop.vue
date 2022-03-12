@@ -50,13 +50,13 @@ export default {
       user_id:this.$auth.user.id,
       shop_id:shop_id,
       };
-      await this.$axios.post("/api/favorite", sendData);
+      await this.$axios.post("/favorite", sendData);
       await this.$store.dispatch('getShops');
       this.$emit('changeFav');
       this.doneGood = 0;
     },
     async unfavorite(e){
-      await this.$axios.delete("/api/favorite/" + e.id);
+      await this.$axios.delete("/favorite/" + e.id);
       await this.$store.dispatch('getShops');
       this.$emit('changeFav');
       },

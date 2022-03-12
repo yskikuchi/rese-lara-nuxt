@@ -95,7 +95,7 @@ export default {
     }
   },
   async mounted(){
-    const resData = await this.$axios.get('/api/shops/' + this.$route.params.shopId);
+    const resData = await this.$axios.get('/shops/' + this.$route.params.shopId);
     this.shop = resData.data.data;
     const topImage = this.shop.images.filter(e => e.type == 'トップ');
     this.imagePath = topImage[0].path;
@@ -143,7 +143,7 @@ export default {
       try{
         this.setSendData();
         if(confirm('この内容で予約してよろしいですか？')){
-          await this.$axios.post("/api/booking",this.sendData);
+          await this.$axios.post("/booking",this.sendData);
           this.$router.push('/done');
         }
       }catch(e){
@@ -158,7 +158,7 @@ export default {
       try{
         this.setSendData();
         if(confirm('この内容で予約してよろしいですか？　予約完了後、事前決済ページへ移動します')){
-          const res = await this.$axios.post("/api/booking",this.sendData);
+          const res = await this.$axios.post("/booking",this.sendData);
           const bookingId = res.data.data.id;
           this.sendData['booking_id'] = bookingId;
           await this.redirectToCheckout(this.sendData);
@@ -173,7 +173,7 @@ export default {
     },
     async redirectToCheckout(bookingInfo){
       try{
-        const res = await this.$axios.post('/api/pay',bookingInfo);
+        const res = await this.$axios.post('/pay',bookingInfo);
         const sessionId = res.data.data.id;
           console.log(sessionId);
 

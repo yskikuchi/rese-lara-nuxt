@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::apiResource('shops', ShopController::class);
 Route::apiResource('favorite', FavoriteController::class);
 Route::apiResource('booking', BookingController::class);

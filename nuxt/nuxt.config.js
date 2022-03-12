@@ -21,7 +21,9 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
+  css: [
+    'assets/reset.css'
+  ],
   // Global CSS: https://go.nuxtjs.dev/config-css
   // css: [
   //   'assets/reset.css'
@@ -46,17 +48,36 @@ export default {
     'nuxt-stripe-module',
   ],
   auth: {
+    // strategies: {
+    //   laravelSanctum: {
+    //     provider: 'laravel/sanctum',
+    //     url: process.env.API_BASE_URL,
+    //   },
+    // },
     strategies: {
-      laravelSanctum: {
-        provider: 'laravel/sanctum',
-        url: process.env.API_URL,
-      },
+      cookie: {
+        cookie: {
+          name: 'XSRF-TOKEN'
+        },
+        endpoints: {
+          csrf: { url: '/sanctum/csrf-cookie', method: 'get' },
+          login: { url: '/login', method: 'post', propertyName: false },
+          user: { url: '/user', method: 'get', propertyName: false },
+          logout: false
+        },
+        tokenRequired: false,
+        tokenType: false,
+        user: {
+          property: false
+        }
+      }
     },
   },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL:process.env.API_URL,
+    proxy: true,
+    prefix: process.env.API_BASE_URL,
     credentials: true,
   },
   router: {
@@ -66,7 +87,7 @@ export default {
   build: {
   },
   publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL || 'http://locahost:3000',
+    baseURL: process.env.API_URL || 'http://locahost:3000',
     apiURL: process.env.API_URL || 'http://localhost:8000',
     nodeEnv: process.env.NODE_ENV,
     awsURL: process.env.AWS_URL,

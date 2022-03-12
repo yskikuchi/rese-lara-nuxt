@@ -31,7 +31,7 @@ export default {
   },
   methods:{
     async getFavoriteShops(){
-      const favoriteData = await this.$axios.get('/api/favorite');
+      const favoriteData = await this.$axios.get('/favorite');
       this.shops = favoriteData.data.data;
     }
   }

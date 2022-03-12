@@ -52,9 +52,9 @@ export default {
           Object.keys(this.errors).forEach((key) =>{
           this.errors[key] = "";
         })
-        await this.$axios.get("sanctum/csrf-cookie");
-        await this.$axios.post("register", this.form);
-        await this.$auth.loginWith("laravelSanctum",{
+        await this.$axios.get("/sanctum/csrf-cookie");
+        await this.$axios.post("/register", this.form);
+        await this.$auth.loginWith('cookie',{
           data:{
             email:this.form.email,
             password:this.form.password,

@@ -44,7 +44,7 @@ export default {
     }
   },
   async mounted(){
-    const resData = await this.$axios.get('/api/shops/' + this.$route.params.shopId);
+    const resData = await this.$axios.get('/shops/' + this.$route.params.shopId);
     this.shop = resData.data.data;
     this.image = this.$config.apiURL + '/' + this.shop.images[0].path;
     for(let i = 1; i <= 5 ;i++){
@@ -65,7 +65,7 @@ export default {
         star:this.rating.slice(0, -1),
       }
         if(confirm('この内容で投稿してよろしいですか？')){
-          await this.$axios.post("/api/review",sendData);
+          await this.$axios.post("/review",sendData);
           this.$router.push('/posted');
         }
       }catch(e){
