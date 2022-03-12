@@ -8,10 +8,20 @@
 
 <script>
 export default{
+  data(){
+    return{
+      processing:false,
+    }
+  },
   methods:{
     async resend(){
+      if(this.processing){
+        return;
+      }
+      this.processing = true;
       await this.$axios.post('/email/verification-notification');
       alert('メールを送信しました。ご確認ください。')
+      this.processing = false;
     }
   }
 }

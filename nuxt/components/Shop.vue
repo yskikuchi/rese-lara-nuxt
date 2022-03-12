@@ -29,7 +29,7 @@ export default {
   },
   data(){
     return{
-      doneGood:0,
+      processing:false,
     }
   },
   filters:{
@@ -42,10 +42,10 @@ export default {
   },
   methods:{
     async favorite(shop_id){
-      if(this.doneGood === 1){
+      if(this.processing){
         return;
       }
-      this.doneGood = 1;
+      this.processing = true;
       const sendData = {
       user_id:this.$auth.user.id,
       shop_id:shop_id,
@@ -53,12 +53,17 @@ export default {
       await this.$axios.post("/favorite", sendData);
       await this.$store.dispatch('getShops');
       this.$emit('changeFav');
-      this.doneGood = 0;
+      this.processing = false;
     },
     async unfavorite(e){
+      if(this.processing){
+        return;
+      }
+      this.processing = true;
       await this.$axios.delete("/favorite/" + e.id);
       await this.$store.dispatch('getShops');
       this.$emit('changeFav');
+      this.processing = false;
       },
   }
 }

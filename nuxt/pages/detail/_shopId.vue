@@ -92,6 +92,7 @@ export default {
       menu:"メニューを選んでください",
       selectedMenuId:"",
       sendData:{},
+      processing:false,
     }
   },
   async mounted(){
@@ -140,9 +141,13 @@ export default {
         };
     },
     async book(){
+      if(this.processing){
+        return;
+      }
       try{
         this.setSendData();
         if(confirm('この内容で予約してよろしいですか？')){
+          this.processing = true;
           await this.$axios.post("/booking",this.sendData);
           this.$router.push('/done');
         }
@@ -152,12 +157,17 @@ export default {
         Object.keys(resData.errors).forEach((key) =>{
           this.errors[key] = resData.errors[key][0];
         })
+        this.processing = false;
       }
     },
     async checkout(){
+      if(this.processing){
+        return;
+      }
       try{
         this.setSendData();
         if(confirm('この内容で予約してよろしいですか？　予約完了後、事前決済ページへ移動します')){
+          this.processing = true;
           const res = await this.$axios.post("/booking",this.sendData);
           const bookingId = res.data.data.id;
           this.sendData['booking_id'] = bookingId;
@@ -169,6 +179,7 @@ export default {
         Object.keys(resData.errors).forEach((key) =>{
           this.errors[key] = resData.errors[key][0];
         })
+        this.processing = false;
       }
     },
     async redirectToCheckout(bookingInfo){
@@ -184,6 +195,7 @@ export default {
         })
       }catch(e){
         console.log(e);
+        this.processing = false;
       }
     }
   },

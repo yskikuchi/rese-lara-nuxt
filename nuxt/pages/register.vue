@@ -43,11 +43,16 @@ export default {
         email:"",
         tel:"",
         password:"",
-      }
+      },
+      processing:false,
     }
   },
   methods:{
     async register(){
+      if(this.processing){
+        return;
+      }
+      this.processing = true;
       try{
           Object.keys(this.errors).forEach((key) =>{
           this.errors[key] = "";
@@ -67,6 +72,7 @@ export default {
         Object.keys(resData.errors).forEach((key) =>{
           this.errors[key] = resData.errors[key][0];
         })
+        this.processing = false;
         }
       }
     }

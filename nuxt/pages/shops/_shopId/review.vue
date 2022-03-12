@@ -41,6 +41,7 @@ export default {
       ratingList:[],
       rating:"",
       comment:"",
+      processing:false,
     }
   },
   async mounted(){
@@ -55,6 +56,9 @@ export default {
   methods:{
     async postComment(){
       try{
+        if(this.processing){
+          return;
+        }
         Object.keys(this.errors).forEach((key) =>{
           this.errors[key] = "";
         })
@@ -65,6 +69,7 @@ export default {
         star:this.rating.slice(0, -1),
       }
         if(confirm('この内容で投稿してよろしいですか？')){
+          this.processing = true;
           await this.$axios.post("/review",sendData);
           this.$router.push('/posted');
         }
@@ -73,6 +78,7 @@ export default {
         Object.keys(resData.errors).forEach((key) =>{
           this.errors[key] = resData.errors[key][0];
         })
+        this.processing = false;
       }
     }
   }

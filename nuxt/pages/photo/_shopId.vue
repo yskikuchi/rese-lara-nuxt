@@ -6,7 +6,7 @@
       <div v-if="exteriorImages.length != 0" class="shop-image-content">
         <div class="shop-image-card" v-for="image in exteriorImages" :key="image.id">
           <img v-if="$config.nodeEnv == 'development'" :src="image.path|imagePathFormat($config.apiURL)">
-          <img v-else :src="image.path|imagePathFormatProduction($config.apiURL)">
+          <img v-else :src="image.path|imagePathFormatProduction($config.awsURL)">
         </div>
       </div>
       <div v-else>この店舗の画像はまだありません</div>
@@ -14,7 +14,7 @@
       <div v-if="interiorImages.length != 0" class="shop-image-content">
         <div class="shop-image-card" v-for="image in interiorImages" :key="image.id">
           <img v-if="$config.nodeEnv == 'development'" :src="image.path|imagePathFormat($config.apiURL)">
-          <img v-else :src="image.path|imagePathFormatProduction($config.apiURL)">
+          <img v-else :src="image.path|imagePathFormatProduction($config.awsURL)">
         </div>
       </div>
       <div v-else>この店舗の画像はまだありません</div>
@@ -23,7 +23,7 @@
         <div v-if="foodImages.length != 0" class="shop-image-content">
           <div class="shop-image-card" v-for="image in foodImages" :key="image.id">
           <img v-if="$config.nodeEnv == 'development'" :src="image.path|imagePathFormat($config.apiURL)">
-          <img v-else :src="image.path|imagePathFormatProduction($config.apiURL)">
+          <img v-else :src="image.path|imagePathFormatProduction($config.awsURL)">
           </div>
         </div>
         <div v-else>この店舗の画像はまだありません</div>
@@ -46,7 +46,6 @@ export default {
   async mounted(){
     const resData = await this.$axios.get('/images/' + this.$route.params.shopId);
     this.images = resData.data.data;
-    console.log(this.images);
     this.exteriorImages = this.images.filter(e => e.type == '外観');
     this.interiorImages = this.images.filter(e => e.type == '店内');
     this.foodImages = this.images.filter(e => e.type == '料理');

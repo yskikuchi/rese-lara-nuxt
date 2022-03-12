@@ -62,7 +62,8 @@ export default {
           menu_id:this.booking.menu.id,
           booking_id:this.booking.id,
           number_of_people:this.booking.number_of_people,
-      }
+      },
+      processing:false,
     };
   },
   filters:{
@@ -80,6 +81,9 @@ export default {
   },
   methods:{
     async cancelBooking(id, index){
+      if(this.processing){
+        return;
+      }
       if(confirm('予約'+index +'を削除してよろしいですか？')){
         await this.$axios.delete('/booking/' + id);
         await this.$store.dispatch('getMyBookings');
@@ -90,8 +94,11 @@ export default {
     },
     async checkout(){
       try{
-        console.log(this.sendData);
+        if(this.processing){
+          return;
+        }
         if(confirm('事前決済ページへ移動しますか？')){
+          this.processing = true;
           const res = await this.$axios.post('/pay',this.sendData);
           const sessionId = res.data.data.id;
           await this.$stripe.redirectToCheckout({
@@ -102,6 +109,7 @@ export default {
       }
       }catch(e){
         console.log(e);
+        this.processing = false;
       }
     },
   }
