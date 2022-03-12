@@ -22,7 +22,7 @@ export default {
     ]
   },
   css: [
-    'assets/reset.css'
+    'nuxt/assets/reset.css'
   ],
   // Global CSS: https://go.nuxtjs.dev/config-css
   // css: [
@@ -96,7 +96,9 @@ export default {
     }
   },
 
+  srcDir: 'nuxt/',
+
   generate: {
-    dir: '../public/dist'
+    dir: 'public/dist'
   }
 }
