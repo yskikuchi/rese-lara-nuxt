@@ -42,11 +42,10 @@ class SendRemindMail extends Command
     public function handle()
     {
         $today = date('Y-m-d');
-        $bookings = Booking::where('date', '2022-03-17')
+        $bookings = Booking::where('date', $today)
         ->with('user:id,name,email','shop:id,name')
         ->get();
         foreach($bookings as $booking){
-            Log::info($booking);
             Mail::to($booking->user->email)
                 ->send(new RemindMail($booking));
         }
