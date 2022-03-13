@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RemindMail;
 use App\Models\Booking;
+use Illuminate\Support\Facades\Log;
 
 class SendRemindMail extends Command
 {
@@ -41,12 +42,13 @@ class SendRemindMail extends Command
     public function handle()
     {
         $today = date('Y-m-d');
-        $Bookings = Booking::where('date', $today)
+        $bookings = Booking::where('date', '2022-03-17')
         ->with('user:id,name,email','shop:id,name')
         ->get();
-        foreach($Bookings as $booking){
-            return Mail::to($booking->user->email)
-                    ->send(new RemindMail($booking));
+        foreach($bookings as $booking){
+            Log::info($booking);
+            Mail::to($booking->user->email)
+                ->send(new RemindMail($booking));
         }
     }
 }
