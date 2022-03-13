@@ -1,66 +1,164 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# プロジェクト名
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Rese（リーズ）
 
-## About Laravel
+## 概要
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Rese グループの飲食店予約サービスです。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+デモページ: https://rese-lara-nuxt.herokuapp.com
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 機能一覧
 
-## Learning Laravel
+### ユーザー
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   会員登録・ログイン
+    -   新規会員登録時のメール認証
+-   飲食店一覧を表示
+    -   ジャンル・エリア・店名で絞り込み
+-   お気に入り店舗登録・削除
+-   予約機能
+    -   日時・人数を指定して予約
+    -   予約の削除
+    -   予約の変更
+-   Stripe による事前決済機能
+-   訪れた飲食店の評価機能
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 店舗代表者
 
-## Laravel Sponsors
+-   店舗情報の作成・更新
+-   店舗の予約確認
+-   店舗画像の追加
+-   予約者へのメール送信機能
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### 管理者
 
-### Premium Partners
+-   上記店舗代表者の機能
+-   店舗代表者の作成
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+## 環境
 
-## Contributing
+-   PHP 7.4.26
+-   laravel 8.81.0
+-   Nodejs v14.18.0
+-   Nuxt v2.15.8
+-   MySQL 5.7.34
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## インストール
 
-## Code of Conduct
+```
+$ git clone https://github.com/yskikuchi/rese-lara-nuxt.git
+$ cd rese-lara-nuxt
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 1. laravel
 
-## Security Vulnerabilities
+```
+$ composer install
+$ cp .env.local.example .env
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+$ php artisan key:generate
+```
 
-## License
+env ファイルのデータベースを修正後
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+$ php artisan migrate
+$ php artisan db:seed
+```
+
+### 2. Nuxt
+
+```
+$ cd ../
+$ cd nuxt rese-nuxtpj
+$ yarn install
+
+$ cp .env.local.example .env
+```
+
+### 3.laravel & Nuxt を立ち上げる
+
+```
+php artisan serve
+yarn dev
+```
+
+## Heroku へのデプロイ
+
+データベースはアドオンで ClearDB をインストールし、MySQL を使用できるようにします。
+
+### 前提条件
+
+1. Heroku アカウントを持っている（ない場合は、[こちら](https://signup.heroku.com/)から Heroku への登録を行ってください。)
+2. Heroku CLI をインストールしている
+3. Heroku マイページにてクレジットカードを登録している（clearDB を利用するのに必要)
+4. 上記インストール手順の通りに、ローカル環境でリポジトリを用意している
+
+### デプロイ
+
+1. リポジトリで以下のコマンドを実行
+
+```
+$ git init
+
+$ heroku create {アプリ名}
+
+$ git add .
+$ git commit -m "message"
+$ git push heroku master
+```
+
+2. 環境変数の設定
+
+
+APP_KEY の設定
+
+```
+php artisan key:generate --show
+```
+
+「base64:xxxx」と出力されるので、そちらを利用して以下のコマンドを入力
+
+```
+heroku config:set APP_KEY=base64:xxxx
+```
+
+その他環境変数として以下を入力
+API_URL={アプリのURL}
+API_BASE_URL＝{アプリのURL}/api
+APP_URL={アプリのURL}
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=
+AWS_BUCKET=
+STRIPE_PUBLIC_KEY＝
+STRIPE_SECRET_KEY＝
+HOME_URL＝{アプリのURL}
+HOST=0.0.0.0
+NODE_ENV=production
+```
+
+3. cleardb の導入
+
+laravel(resepj-api)のリポジトリにて以下を実行
+
+```
+heroku addons:add cleardb
+heroku config:get CLEARDB_DATABASE_URL
+```
+
+「CLEARDB_DATABASE_URL: mysql://[ユーザー名]:[パスワード]@[ホスト名]/[データベース名]?reconnect=true」のような形で結果が出力されるので。以下の設定に利用する
+
+```
+heroku config:set DB_USERNAME=ユーザー名
+heroku config:set DB_PASSWORD=パスワード
+heroku config:set DB_HOST=ホスト名
+heroku config:set DB_DATABASE=データベース名
+```
+
+設定が確認できたら migrate を実行
+
+```
+heroku run php artisan migrate
+```
