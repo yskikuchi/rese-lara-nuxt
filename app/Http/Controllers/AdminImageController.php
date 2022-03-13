@@ -30,12 +30,12 @@ class AdminImageController extends Controller
             return view('admin.imagePosted', compact('path'));
         }else{
             $file = Storage::disk('s3')->putFile('public',$request->image);
-            $original = Storage::disk('s3')->url($file);
-            $path = str_replace('public/', '', $file);
+            $path = Storage::disk('s3')->url($file);
+            $storageName = str_replace('public/', '', $file);
             $data = [
                 'shop_id' => $request->shop_id,
                 'type' => $request->type,
-                'path' => $path,
+                'path' => $storageName,
             ];
             Image::create($data);
             return view('admin.imagePosted', compact('path'));
