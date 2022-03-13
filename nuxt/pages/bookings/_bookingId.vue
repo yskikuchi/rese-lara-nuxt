@@ -137,7 +137,7 @@ export default {
             booking_id:this.booking.id,
             menu_id:this.selectedMenuId,
           };
-          await this.$axios.put("/api/booking/" + this.$route.params.bookingId, sendData);
+          await this.$axios.put("/booking/" + this.$route.params.bookingId, sendData);
           this.$router.push('/mypage');
         }
       }catch(e){
