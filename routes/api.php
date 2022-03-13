@@ -34,5 +34,6 @@ Route::apiResource('review', ReviewController::class);
 Route::apiResource('images', ImageController::class);
 
 Route::post('/pay', [PaymentController::class, 'session']);
+Route::post('/stripe/webhook', [PaymentController::class, 'webhook']);
 
 // Route::get('/review/{shop_id}', [ReviewController::class, '']);
