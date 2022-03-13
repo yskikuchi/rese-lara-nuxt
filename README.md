@@ -125,6 +125,7 @@ heroku config:set APP_KEY=base64:xxxx
 ```
 
 その他環境変数として以下を入力
+```
 API_URL={アプリのURL}
 API_BASE_URL＝{アプリのURL}/api
 APP_URL={アプリのURL}
