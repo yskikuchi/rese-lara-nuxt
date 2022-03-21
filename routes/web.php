@@ -22,7 +22,6 @@ use App\Http\Controllers\PaymentController;
 */
 
 
-Route::post('/stripe/webhook', [PaymentController::class, 'webhook']);
 
 Route::prefix('admin')->group(function(){
     Route::get('/', function () {

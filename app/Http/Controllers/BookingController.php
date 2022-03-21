@@ -81,8 +81,12 @@ class BookingController extends Controller
             'time' => $request -> time,
             'number_of_people' => $request -> number_of_people,
         ];
-        $item = Booking::where('id', $id)->update($update);
+        $item = Booking::where('id', $id)
+        ->where('checked', false)
+        ->first();
+
         if ($item) {
+            $item -> update($update);
             return response()->json([
                 'message' => 'Updated successfully',
             ], 200);
@@ -101,8 +105,12 @@ class BookingController extends Controller
      */
     public function destroy($id)
     {
-        $item = Booking::find($id)->delete();
+        $item = Booking::where('id', $id)
+        ->where('checked', false) //支払い済は削除不可
+        ->first();
+
         if ($item) {
+            $item->delete();
             return response()->json([
             'message' => 'Deleted successfully',
         ], 200);
