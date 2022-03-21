@@ -68,6 +68,8 @@ class BookingRequest extends FormRequest
         return [
             'time.required' => '時間を入力してください',
             'date.required' => '日付を入力してください',
+            'date.after_or_equal' => '明日以降の日付を選択してください',
+            'date.before_or_equal' => '予約は１ヶ月前から可能となっております',
             'number_of_people.required' => '予約人数を入力してください',
             'menu_id.required' => 'メニューを選んでください'
         ];
